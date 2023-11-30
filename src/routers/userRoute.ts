@@ -4,5 +4,6 @@ import UserController from '../controllers/userController';
 const router:Router = express.Router();
 
 router.get('/register', UserController.register);
+router.get('/signin', UserController.signin);
 
 export default router;
