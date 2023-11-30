@@ -1,4 +1,4 @@
-<form method="post">
+<form method="post" action="register" class="needs-validation" novalidate>
     <div>
         <div>
             <h2>Register</h2>
@@ -23,8 +23,8 @@
         </div>
 
         <div class="mb-3">
-            <label for="re_pwd" class="form-label">Confirm Password</label>
-            <input type="password" class="form-control" name="re_pwd" id="re_pwd" required
+            <label for="confirm_password" class="form-label">Confirm Password</label>
+            <input type="password" class="form-control" name="confirm_password" id="confirm_password" required
                 placeholder="Confirm password" autocomplete="off">
             <div class="invalid-feedback">
                 Password didn't match.
@@ -40,3 +40,21 @@
         <p>If already registred, please <a href="/user/signin">Sign in</a></p>
     </div>
 </form>
+
+<script>
+
+    var password = document.getElementById("pwd");
+    var confirm_password = document.getElementById("confirm_password");
+
+    function validatePassword(){
+        if(password.value != confirm_password.value){
+            confirm_password.setCustomValidity("Passwords don't match!")
+        }else{
+            confirm_password.setCustomValidity('');
+        }
+    }
+
+    password.onchange = validatePassword;
+    confirm_password.onkeyup = validatePassword;
+
+</script>
