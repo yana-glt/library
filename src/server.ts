@@ -1,21 +1,28 @@
-import express from 'express';
+import express ,{Express} from 'express';
 import dotenv from 'dotenv';
-import mongoose from 'mongoose';
+import mongoose, {Connection} from 'mongoose';
 import {config} from './config/config';
+import indexRouter from './routers/indexRoute';
+import authorRouter from './routers/authorRoute';
+import bookRouter from './routers/bookRoute';
 
 dotenv.config()
-const app = express();
+const app:Express = express();
 
 mongoose.connect(config.mongo.url);
-const db = mongoose.connection;
-db.on('error', (err) => {console.log(err)});
-db.once('open', () => {
+const db:Connection = mongoose.connection;
+db.on('error', (err:string) => {console.log(err)});
+db.once('open', ():void => {
     console.log('DB connected successfully');
     start();
 })
 
-const start = () =>{
-    app.listen(config.server.port, () => {
+app.use('/', indexRouter);
+app.use('/author', authorRouter);
+app.use('/book', bookRouter);
+
+const start = ():void =>{
+    app.listen(config.server.port, ():void => {
         console.log('Server is running')
     });
 }
