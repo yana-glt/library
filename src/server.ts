@@ -5,6 +5,7 @@ import {config} from './config/config';
 import indexRouter from './routers/indexRoute';
 import authorRouter from './routers/authorRoute';
 import bookRouter from './routers/bookRoute';
+import userRouter from './routers/userRoute';
 import expressEjsLayouts from 'express-ejs-layouts';
 
 dotenv.config()
@@ -29,6 +30,7 @@ app.use(express.json());
 app.use('/', indexRouter);
 app.use('/author', authorRouter);
 app.use('/book', bookRouter);
+app.use('/user', userRouter);
 
 const start = ():void =>{
     app.listen(config.server.port, ():void => {

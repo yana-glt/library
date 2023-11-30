@@ -26,3 +26,15 @@ section {
     align-items: center;
     margin-top: 100px;
 }
+
+.container-div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+}
+
+.form-control{
+    width: 300px;
+}
