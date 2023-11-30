@@ -22,7 +22,10 @@
     "typescript": "^5.3.2"
   },
   "dependencies": {
+    "@types/express-ejs-layouts": "^2.5.4",
+    "ejs": "^3.1.9",
     "express": "^4.18.2",
+    "express-ejs-layouts": "^2.5.1",
     "mongoose": "^8.0.2"
   }
 }

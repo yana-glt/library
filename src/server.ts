@@ -5,6 +5,7 @@ import {config} from './config/config';
 import indexRouter from './routers/indexRoute';
 import authorRouter from './routers/authorRoute';
 import bookRouter from './routers/bookRoute';
+import expressEjsLayouts from 'express-ejs-layouts';
 
 dotenv.config()
 const app:Express = express();
@@ -16,6 +17,14 @@ db.once('open', ():void => {
     console.log('DB connected successfully');
     start();
 })
+
+app.set('view engine', 'ejs');
+app.set('views', __dirname + '/views');
+app.set('layout', 'layouts/layout');
+
+app.use(express.static('src/public'));
+app.use(expressEjsLayouts);
+app.use(express.json());
 
 app.use('/', indexRouter);
 app.use('/author', authorRouter);
