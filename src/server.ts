@@ -1,39 +1,43 @@
-import express ,{Express} from 'express';
-import dotenv from 'dotenv';
-import mongoose, {Connection} from 'mongoose';
-import {config} from './config/config';
-import indexRouter from './routers/indexRoute';
-import authorRouter from './routers/authorRoute';
-import bookRouter from './routers/bookRoute';
-import userRouter from './routers/userRoute';
-import expressEjsLayouts from 'express-ejs-layouts';
+import express, { Express } from "express";
+import dotenv from "dotenv";
+import mongoose, { Connection } from "mongoose";
+import { config } from "./config/config";
+import indexRouter from "./routers/indexRoute";
+import authorRouter from "./routers/authorRoute";
+import bookRouter from "./routers/bookRoute";
+import userRouter from "./routers/userRoute";
+import expressEjsLayouts from "express-ejs-layouts";
+import bodyParser from "body-parser";
 
-dotenv.config()
-const app:Express = express();
+dotenv.config();
+const app: Express = express();
 
 mongoose.connect(config.mongo.url);
-const db:Connection = mongoose.connection;
-db.on('error', (err:string) => {console.log(err)});
-db.once('open', ():void => {
-    console.log('DB connected successfully');
-    start();
-})
+const db: Connection = mongoose.connection;
+db.on("error", (err: string) => {
+  console.log(err);
+});
+db.once("open", (): void => {
+  console.log("DB connected successfully");
+  start();
+});
 
-app.set('view engine', 'ejs');
-app.set('views', __dirname + '/views');
-app.set('layout', 'layouts/layout');
+app.set("view engine", "ejs");
+app.set("views", __dirname + "/views");
+app.set("layout", "layouts/layout");
 
-app.use(express.static('src/public'));
+app.use(express.static("src/public"));
+app.use(bodyParser.urlencoded({ limit: "10mb", extended: true }));
 app.use(expressEjsLayouts);
 app.use(express.json());
 
-app.use('/', indexRouter);
-app.use('/author', authorRouter);
-app.use('/book', bookRouter);
-app.use('/user', userRouter);
+app.use("/", indexRouter);
+app.use("/author", authorRouter);
+app.use("/book", bookRouter);
+app.use("/user", userRouter);
 
-const start = ():void =>{
-    app.listen(config.server.port, ():void => {
-        console.log('Server is running')
-    });
-}
+const start = (): void => {
+  app.listen(config.server.port, (): void => {
+    console.log("Server is running");
+  });
+};
