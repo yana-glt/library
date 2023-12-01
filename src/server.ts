@@ -8,6 +8,7 @@ import bookRouter from "./routers/bookRoute";
 import userRouter from "./routers/userRoute";
 import expressEjsLayouts from "express-ejs-layouts";
 import bodyParser from "body-parser";
+import cookieParser from "cookie-parser";
 
 dotenv.config();
 const app: Express = express();
@@ -30,6 +31,7 @@ app.use(express.static("src/public"));
 app.use(bodyParser.urlencoded({ limit: "10mb", extended: true }));
 app.use(expressEjsLayouts);
 app.use(express.json());
+app.use(cookieParser());
 
 app.use("/", indexRouter);
 app.use("/author", authorRouter);

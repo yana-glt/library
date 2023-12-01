@@ -1,6 +1,7 @@
 import express, { Router, Request, Response } from "express";
 import User from "../models/user";
 import crypto from "crypto";
+import jwt from 'jsonwebtoken';
 
 class UserController {
   static key: any = process.env.key;
@@ -28,18 +29,21 @@ class UserController {
       console.log(`user added successfully ${newUser}`);
       res.render("user/signin");
     } catch (error) {}
-  };
+  }
 
-  public static signinUser = async (req: Request, res: Response) => {
+  public static signInUser = async (req: Request, res: Response) => {
     const body = req.body;
     const { email, pwd } = req.body;
     console.log(req.body);
     try {
-      const user: any = await User.findOne({ email: email });
+      const user:any = await User.findOne({ email: email });
       if (user) {
         const decPassword = this.decryptData(user.password);
         if (pwd === decPassword) {
           console.log("Valid User");
+          const accessToken = this.generateAccessToken(user);
+          console.log(accessToken);
+          res.cookie('accessToken', accessToken, {maxAge:900000, httpOnly:true});
           res.redirect("/");
         } else {
           console.log("Invalid user");
@@ -47,8 +51,18 @@ class UserController {
         }
       }
       console.log(`registered User ${user}`);
+    } catch (error) {
+
+    }
+  }
+
+  public static signOut = async (req: Request, res: Response) => {
+    try {
+      res.clearCookie('accessToken');
+      res.render('user/signin');
     } catch (error) {}
-  };
+  }
+
 
   static encryptData(data: string): any {
     const cipher = crypto.createCipheriv(this.algo, this.key, this.iv);
@@ -62,6 +76,13 @@ class UserController {
     let decrypted = decipher.update(data, "base64", "utf8");
     decrypted += decipher.final("utf8");
     return decrypted;
+  }
+
+  static generateAccessToken(_user:any){
+    const key = process.env.secret_key || '';
+    const {_id, email, role} = _user;
+    const user:any = {_id, email, role};
+    return jwt.sign({user}, key, {expiresIn:'30s'});
   }
 }
 
