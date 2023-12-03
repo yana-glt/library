@@ -12,6 +12,7 @@ import cookieParser from "cookie-parser";
 import verifyToken from "./middleware/verifyToken";
 import methodOverride from 'method-override';
 import fileupload from 'express-fileupload';
+import ErrorHandler from "./middleware/errorHandler";
 
 dotenv.config();
 const app: Express = express();
@@ -42,6 +43,8 @@ app.use("/user", userRouter);
 app.use("/", verifyToken, indexRouter);
 app.use("/author", verifyToken, authorRouter);
 app.use("/book", verifyToken, bookRouter);
+app.all('*', ErrorHandler.handleUnknownUrl);
+app.use(ErrorHandler.handleError);
 
 const start = (): void => {
   app.listen(config.server.port, (): void => {
