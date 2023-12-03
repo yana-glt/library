@@ -5,7 +5,8 @@ export interface IBook {
     description:string,
     publishDate:Date,
     pageCount:number,
-    coverImage:Buffer,
+    cover:Buffer,
+    coverType:string,
     author:mongoose.Schema.Types.ObjectId,
 };
 export interface IBookModel extends IBook, Document {}
@@ -16,9 +17,16 @@ const bookSchema:Schema = new Schema(
         description:{type:String, required:true},
         publishDate:{type:Date, required:true},
         pageCount:{type:Number, required:true},
-        coverImage:{type:Buffer, required:true},
+        cover:{type:Buffer, required:true},
+        coverType:{type:String, required:true},
         author:{type: mongoose.Schema.Types.ObjectId, required:true, ref:'Author'},
     }
 );
+
+bookSchema.virtual('coverImagePath').get(function():any {
+    if(this.cover && this.coverType){
+        return `data:${this.coverType};charset=utf-8;base64, ${this.cover.toString('base64')}`
+    }
+})
 
 export default mongoose.model<IBookModel>('Book', bookSchema);

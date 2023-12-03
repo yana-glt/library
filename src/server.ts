@@ -11,6 +11,7 @@ import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import verifyToken from "./middleware/verifyToken";
 import methodOverride from 'method-override';
+import fileupload from 'express-fileupload';
 
 dotenv.config();
 const app: Express = express();
@@ -33,6 +34,7 @@ app.use(express.static("src/public"));
 app.use(bodyParser.urlencoded({ limit: "10mb", extended: true }));
 app.use(expressEjsLayouts);
 app.use(methodOverride('_method'));
+app.use(fileupload());
 app.use(express.json());
 app.use(cookieParser());
 
