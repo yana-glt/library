@@ -6,6 +6,7 @@ import indexRouter from "./routers/indexRoute";
 import authorRouter from "./routers/authorRoute";
 import bookRouter from "./routers/bookRoute";
 import userRouter from "./routers/userRoute";
+import contactRouter from "./routers/contactRoute";
 import expressEjsLayouts from "express-ejs-layouts";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
@@ -43,6 +44,7 @@ app.use("/user", userRouter);
 app.use("/", verifyToken, indexRouter);
 app.use("/author", verifyToken, authorRouter);
 app.use("/book", verifyToken, bookRouter);
+app.use("/contact", verifyToken, contactRouter);
 app.all('*', ErrorHandler.handleUnknownUrl);
 app.use(ErrorHandler.handleError);
 

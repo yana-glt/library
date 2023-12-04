@@ -1,9 +1,12 @@
 import express, { Router, Request, Response } from "express";
+import Book from '../models/book';
+import Author from '../models/author';
 
 class IndexController {
-  public static getIndex = (req: any, res: Response) => {
+  public static getIndex = async (req: any, res: Response) => {
     const user = req.user;
-    res.render("index", { user: user });
+    const books:any = await Book.find().sort({createdAt:'desc'}).limit(2).populate('author').exec();
+    res.render("index", { books:books,  user: user });
   };
 }
 
