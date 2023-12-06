@@ -5,15 +5,21 @@
         </div>
         <div class="modal-body">
             <div class="col-12">
-                <h3 class="card-title m-4"> <%= author.name %></h3>
+                <h3 class="card-title m-4">
+                    <%= author.name %>
+                </h3>
             </div>
             <div class="col-12">
-                <h3 class="card-title m-4"> <%= author.country %></h3>
+                <h3 class="card-title m-4">
+                    <%= author.country %>
+                </h3>
             </div>
         </div>
         <div class="modal-footer">
-            <a href="/author"><button type="button" class="btn btn-secondary m-3" data-dismiss="modal"><i class="bi bi-x-circle"></i> Close</button></a>
-            <a class="btn btn-primary text-right" href="/author/<%= author.id %>/edit"><i class="bi bi-pencil"></i> Edit</a>
+            <a href="/author"><button type="button" class="btn btn-secondary m-3" data-dismiss="modal"><i
+                        class="bi bi-x-circle"></i> Close</button></a>
+            <a class="btn btn-primary text-right" href="/author/<%= author.id %>/edit"><i class="bi bi-pencil"></i>
+                Edit</a>
         </div>
     </div>
 </form>

@@ -11,21 +11,27 @@ import expressEjsLayouts from "express-ejs-layouts";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import verifyToken from "./middleware/verifyToken";
-import methodOverride from 'method-override';
-import fileupload from 'express-fileupload';
+import methodOverride from "method-override";
+import fileupload from "express-fileupload";
 import ErrorHandler from "./middleware/errorHandler";
+import log4js from "./middleware/logger";
 
 dotenv.config();
 const app: Express = express();
+const logger = log4js.getLogger("file");
 
 mongoose.connect(config.mongo.url);
 const db: Connection = mongoose.connection;
 db.on("error", (err: string) => {
-  console.log(err);
+  logger.error(err);
 });
 db.once("open", (): void => {
-  console.log("DB connected successfully");
+  logger.info("DB connected successfully");
   start();
+});
+
+process.on("uncaughtException", function (err) {
+  logger.info(`UncaughtException: ${err}`);
 });
 
 app.set("view engine", "ejs");
@@ -35,7 +41,7 @@ app.set("layout", "layouts/layout");
 app.use(express.static("src/public"));
 app.use(bodyParser.urlencoded({ limit: "10mb", extended: true }));
 app.use(expressEjsLayouts);
-app.use(methodOverride('_method'));
+app.use(methodOverride("_method"));
 app.use(fileupload());
 app.use(express.json());
 app.use(cookieParser());
@@ -45,11 +51,11 @@ app.use("/", verifyToken, indexRouter);
 app.use("/author", verifyToken, authorRouter);
 app.use("/book", verifyToken, bookRouter);
 app.use("/contact", verifyToken, contactRouter);
-app.all('*', ErrorHandler.handleUnknownUrl);
+app.all("*", ErrorHandler.handleUnknownUrl);
 app.use(ErrorHandler.handleError);
 
 const start = (): void => {
   app.listen(config.server.port, (): void => {
-    console.log("Server is running");
+    logger.info("Server is running");
   });
 };

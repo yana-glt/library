@@ -1,32 +1,35 @@
-import mongoose ,{Document, Schema} from 'mongoose';
+import mongoose, { Document, Schema } from "mongoose";
 
 export interface IBook {
-    title:string,
-    description:string,
-    publishDate:Date,
-    pageCount:number,
-    cover:Buffer,
-    coverType:string,
-    author:mongoose.Schema.Types.ObjectId,
+  title: string,
+  description: string,
+  publishDate: Date,
+  pageCount: number,
+  cover: Buffer,
+  coverType: string,
+  author: mongoose.Schema.Types.ObjectId,
 };
-export interface IBookModel extends IBook, Document {}
+export interface IBookModel extends IBook, Document {};
 
-const bookSchema:Schema = new Schema(
-    {
-        title:{type:String, required:true},
-        description:{type:String, required:true},
-        publishDate:{type:Date, required:true},
-        pageCount:{type:Number, required:true},
-        cover:{type:Buffer, required:true},
-        coverType:{type:String, required:true},
-        author:{type: mongoose.Schema.Types.ObjectId, required:true, ref:'Author'},
-    }
+const bookSchema: Schema = new Schema(
+  {
+    title: { type: String, required: true },
+    description: { type: String, required: true },
+    publishDate: { type: Date, required: true },
+    pageCount: { type: Number, required: true },
+    cover: { type: Buffer, required: true },
+    coverType: { type: String, required: true },
+    author: {type: mongoose.Schema.Types.ObjectId, required: true, ref: "Author",},
+  },
+  { timestamps: true }
 );
 
-bookSchema.virtual('coverImagePath').get(function():any {
-    if(this.cover && this.coverType){
-        return `data:${this.coverType};charset=utf-8;base64, ${this.cover.toString('base64')}`
-    }
-})
+bookSchema.virtual("coverImagePath").get(function (): any {
+  if (this.cover && this.coverType) {
+    return `data:${this.coverType};charset=utf-8;base64, ${this.cover.toString(
+      "base64"
+    )}`;
+  }
+});
 
-export default mongoose.model<IBookModel>('Book', bookSchema);
+export default mongoose.model<IBookModel>("Book", bookSchema);

@@ -14,9 +14,9 @@
             Search
         </button>
         <a href="/author/new"> <button type="button" class="btn btn-success">
-            <i class="bi bi-plus" style="color:white;"></i>
-            Add Author
-        </button></a>
+                <i class="bi bi-plus" style="color:white;"></i>
+                Add Author
+            </button></a>
     </div>
 </form>
 <br>
@@ -41,13 +41,18 @@
                                 <%= author.country %>
                             </td>
                             <td style="width: 25%; align-items: center; text-align: center;">
-                                <form id="formAction<%= author.id %>" action="/author/<%= author.id%>?_method=DELETE" method="post"></form>
-                                <a class="btn btn-primary" href="/author/<%= author.id%>"><i class="bi bi-eye" style="color:white;"></i></a>
-                                <a class="btn btn-success" href="/author/<%= author.id%>/edit"><i class="bi bi-pencil" style="color:white;"></i></a>
-                                <a class="btn btn-danger" href="javascript:$('#formAction<%= author.id %>').submit();"><i class="bi bi-trash" style="color:white;"></i></a>
+                                <form id="formAction<%= author.id %>" action="/author/<%= author.id%>?_method=DELETE"
+                                    method="post"></form>
+                                <a class="btn btn-primary" href="/author/<%= author.id%>"><i class="bi bi-eye"
+                                        style="color:white;"></i></a>
+                                <a class="btn btn-success" href="/author/<%= author.id%>/edit"><i class="bi bi-pencil"
+                                        style="color:white;"></i></a>
+                                <a class="btn btn-danger"
+                                    href="javascript:$('#formAction<%= author.id %>').submit();"><i class="bi bi-trash"
+                                        style="color:white;"></i></a>
                             </td>
                         </tr>
-                    <% }); %>
+                        <% }); %>
                 </tbody>
             </table>
         </div>

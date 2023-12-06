@@ -1,7 +1,10 @@
 import express, { Router, Request, Response } from "express";
 import User from "../models/user";
 import crypto from "crypto";
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
+import log4js from "../middleware/logger";
+
+const logger = log4js.getLogger("file");
 
 class UserController {
   static key: any = process.env.key;
@@ -23,46 +26,35 @@ class UserController {
       email,
       password,
     });
-    console.log(user);
-    try {
-      const newUser = await user.save();
-      console.log(`user added successfully ${newUser}`);
-      res.render("user/signin");
-    } catch (error) {}
-  }
+    logger.info(`New user was registred: ${user}`);
+    const newUser = await user.save();
+    logger.info(`New user was added to db successfully ${newUser}`);
+    res.render("user/signin");
+  };
 
   public static signInUser = async (req: Request, res: Response) => {
     const body = req.body;
     const { email, pwd } = req.body;
-    console.log(req.body);
-    try {
-      const user:any = await User.findOne({ email: email });
-      if (user) {
-        const decPassword = this.decryptData(user.password);
-        if (pwd === decPassword) {
-          console.log("Valid User");
-          const accessToken = this.generateAccessToken(user);
-          console.log(accessToken);
-          res.cookie('accessToken', accessToken, {maxAge:900000, httpOnly:true});
-          res.redirect("/");
-        } else {
-          console.log("Invalid user");
-          res.render("user/signin");
-        }
+    const user: any = await User.findOne({ email: email });
+    if (user) {
+      const decPassword = this.decryptData(user.password);
+      if (pwd === decPassword) {
+        const accessToken = this.generateAccessToken(user);
+        res.cookie("accessToken", accessToken, {
+          maxAge: 900000,
+          httpOnly: true,
+        });
+        res.redirect("/");
+      } else {
+        res.render("user/signin");
       }
-      console.log(`registered User ${user}`);
-    } catch (error) {
-
     }
-  }
+  };
 
   public static signOut = async (req: Request, res: Response) => {
-    try {
-      res.clearCookie('accessToken');
-      res.render('user/signin');
-    } catch (error) {}
-  }
-
+    res.clearCookie("accessToken");
+    res.render("user/signin");
+  };
 
   static encryptData(data: string): any {
     const cipher = crypto.createCipheriv(this.algo, this.key, this.iv);
@@ -78,11 +70,11 @@ class UserController {
     return decrypted;
   }
 
-  static generateAccessToken(_user:any){
-    const key = process.env.secret_key || '';
-    const {_id, email, role} = _user;
-    const user:any = {_id, email, role};
-    return jwt.sign({user}, key, {expiresIn:'30s'});
+  static generateAccessToken(_user: any) {
+    const key = process.env.secret_key || "";
+    const { _id, email, role } = _user;
+    const user: any = { _id, email, role };
+    return jwt.sign({ user }, key, { expiresIn: "30s" });
   }
 }
 

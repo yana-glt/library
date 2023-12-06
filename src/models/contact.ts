@@ -1,6 +1,11 @@
 import mongoose, { Document, Schema } from "mongoose";
 
-export interface IContact {};
+export interface IContact {
+  name: string,
+  email: string,
+  subject: string,
+  message: string,
+};
 export interface IContactModel extends IContact, Document {};
 
 const contactSchema: Schema = new Schema(

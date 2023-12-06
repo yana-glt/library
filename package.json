@@ -4,12 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "clean": "rm -rf ./build/",
-    "tsc": "tsc",
-    "start": "node build/server.js",
-    "dev": "nodemon src/server.ts",
-    "build:all": "npm-run-all clean tsc start",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon src/server.ts"
   },
   "author": "",
   "license": "ISC",
@@ -35,6 +30,7 @@
     "express-ejs-layouts": "^2.5.1",
     "express-fileupload": "^1.4.3",
     "jsonwebtoken": "^9.0.2",
+    "log4js": "^6.9.1",
     "method-override": "^3.0.0",
     "mongoose": "^8.0.2"
   }
