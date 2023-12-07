@@ -1,9 +1,8 @@
 import express ,{Router, Request, Response} from 'express';
+import IndexController from '../controllers/indexController';
 
 const router:Router = express.Router();
 
-router.get('/', (req:Request, res:Response) => {
-    res.send("the first get response");
-})
+router.get('/', IndexController.getIndex);
 
 export default router;
