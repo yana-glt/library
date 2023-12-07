@@ -35,7 +35,7 @@ const start = async () => {
     app.listen(config.server.port, (): void => {
       console.log("Server is running");
     });
-  } catch (err: any) {
+  } catch (err) {
     console.log(err);
     process.exit(1);
   }
