@@ -8,8 +8,6 @@ class AuthorController {
 
   public static viewAuthor = async (req: Request, res: Response) => {
     const user = req.user;
-    const email = req.body.email;
-    console.log(email);
     try {
       const author = await Author.findById(req.params.id);
       res.render("author/view", { author: author, user: user });
@@ -19,7 +17,6 @@ class AuthorController {
   };
 
   public static saveAuthor = async (req: Request, res: Response) => {
-    console.log(req.body);
     const { name, country } = req.body;
     const author = new Author({ name, country });
     try {
