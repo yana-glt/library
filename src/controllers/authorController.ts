@@ -1,12 +1,14 @@
 import express, { Request, Response } from "express";
 import Author from "../models/author";
+import User from "../models/user";
+import CustomRequest from '../middleware/customRequest';
 
 class AuthorController {
-  public static viewAuthors = (req: Request, res: Response) => {
+  public static viewAuthors = (req: CustomRequest, res: Response) => {
     this.renderAuthor(req, res);
   };
 
-  public static viewAuthor = async (req: Request, res: Response) => {
+  public static viewAuthor = async (req: CustomRequest, res: Response) => {
     const user = req.user;
     try {
       const author = await Author.findById(req.params.id);
@@ -16,7 +18,7 @@ class AuthorController {
     }
   };
 
-  public static saveAuthor = async (req: Request, res: Response) => {
+  public static saveAuthor = async (req: CustomRequest, res: Response) => {
     const { name, country } = req.body;
     const author = new Author({ name, country });
     try {
@@ -28,7 +30,7 @@ class AuthorController {
     }
   };
 
-  public static editAuthor = async (req: Request, res: Response) => {
+  public static editAuthor = async (req: CustomRequest, res: Response) => {
     const user = req.user;
     try {
       const author = await Author.findById(req.params.id);
@@ -38,12 +40,12 @@ class AuthorController {
     }
   };
 
-  public static newAuthor = (req: Request, res: Response) => {
+  public static newAuthor = (req: CustomRequest, res: Response) => {
     const user = req.user;
     res.render("author/new", { author: new Author(), user: user });
   };
 
-  public static updateAuthor = async (req: Request, res: Response) => {
+  public static updateAuthor = async (req: CustomRequest, res: Response) => {
     const user = req.user;
     try {
       const author: any = await Author.findById(req.params.id);
@@ -56,7 +58,7 @@ class AuthorController {
     }
   };
 
-  public static deleteAuthor = async (req: Request, res: Response) => {
+  public static deleteAuthor = async (req: CustomRequest, res: Response) => {
     const id = req.params.id;
     try {
       const author = await Author.findOneAndDelete({ _id: id });
@@ -66,7 +68,7 @@ class AuthorController {
     }
   };
 
-  private static async renderAuthor(req: Request, res: Response) {
+  private static async renderAuthor(req: CustomRequest, res: Response) {
     const user = req.user;
     let searchOption: any = {};
     const pattern: any = req.query.name || "";

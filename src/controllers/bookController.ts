@@ -1,13 +1,14 @@
-import express, { Router, Request, Response } from "express";
+import express, { Request, Response } from "express";
 import Book from "../models/book";
 import Author from "../models/author";
+import CustomRequest from '../middleware/customRequest';
 
 class BookController {
-  public static viewBooks = (req: Request, res: Response) => {
+  public static viewBooks = (req: CustomRequest, res: Response) => {
     this.renderBook(req, res);
   };
 
-  public static viewBook = async (req: Request, res: Response) => {
+  public static viewBook = async (req: CustomRequest, res: Response) => {
     const user = req.user;
     try {
       const book = await Book.findById(req.params.id).populate("author").exec();
@@ -17,7 +18,7 @@ class BookController {
     }
   };
 
-  public static newBook = async (req: Request, res: Response) => {
+  public static newBook = async (req: CustomRequest, res: Response) => {
     const user = req.user;
     try {
       const authors = await Author.find();
@@ -31,7 +32,7 @@ class BookController {
     }
   };
 
-  public static saveBook = async (req: Request, res: Response) => {
+  public static saveBook = async (req: CustomRequest, res: Response) => {
     console.log(req.body);
     console.log(req.files);
     try {
@@ -59,7 +60,7 @@ class BookController {
     }
   };
 
-  public static updateBook = async (req: Request, res: Response) => {
+  public static updateBook = async (req: CustomRequest, res: Response) => {
     try {
       const book = await Book.findById(req.params.id);
       if (book) {
@@ -85,7 +86,7 @@ class BookController {
     }
   };
 
-  public static editBook = async (req: Request, res: Response) => {
+  public static editBook = async (req: CustomRequest, res: Response) => {
     const user = req.user;
     try {
       const authors = await Author.find({});
@@ -96,7 +97,7 @@ class BookController {
     }
   };
 
-  public static deleteBook = async (req: Request, res: Response) => {
+  public static deleteBook = async (req: CustomRequest, res: Response) => {
     const id = req.params.id;
     try {
       const book = await Book.findById({ _id: id });
@@ -114,7 +115,7 @@ class BookController {
     }
   };
 
-  private static async renderBook(req: Request, res: Response) {
+  private static async renderBook(req: CustomRequest, res: Response) {
     const user = req.user;
     try {
       let searchOption: any = {};
