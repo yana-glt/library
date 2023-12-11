@@ -23,7 +23,7 @@ const bookSchema:Schema = new Schema(
     }
 );
 
-bookSchema.virtual('coverImagePath').get(function():any {
+bookSchema.virtual('coverImagePath').get(function() {
     if(this.cover && this.coverType){
         return `data:${this.coverType};charset=utf-8;base64, ${this.cover.toString('base64')}`
     }
