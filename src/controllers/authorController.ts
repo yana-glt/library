@@ -1,4 +1,4 @@
-import express, { Router, Request, Response } from "express";
+import express, { Request, Response } from "express";
 import Author from "../models/author";
 
 class AuthorController {
@@ -6,8 +6,10 @@ class AuthorController {
     this.renderAuthor(req, res);
   };
 
-  public static viewAuthor = async (req: any, res: Response) => {
+  public static viewAuthor = async (req: Request, res: Response) => {
     const user = req.user;
+    const email = req.body.email;
+    console.log(email);
     try {
       const author = await Author.findById(req.params.id);
       res.render("author/view", { author: author, user: user });
@@ -29,22 +31,22 @@ class AuthorController {
     }
   };
 
-  public static editAuthor = async (req: any, res: Response) => {
+  public static editAuthor = async (req: Request, res: Response) => {
     const user = req.user;
     try {
-      const author: any = await Author.findById(req.params.id);
+      const author = await Author.findById(req.params.id);
       res.render("author/edit", { author: author, user: user });
     } catch (error) {
       console.log(error);
     }
   };
 
-  public static newAuthor = (req: any, res: Response) => {
+  public static newAuthor = (req: Request, res: Response) => {
     const user = req.user;
     res.render("author/new", { author: new Author(), user: user });
   };
 
-  public static updateAuthor = async (req: any, res: Response) => {
+  public static updateAuthor = async (req: Request, res: Response) => {
     const user = req.user;
     try {
       const author: any = await Author.findById(req.params.id);
@@ -67,15 +69,15 @@ class AuthorController {
     }
   };
 
-  private static async renderAuthor(req: any, res: Response) {
+  private static async renderAuthor(req: Request, res: Response) {
     const user = req.user;
     let searchOption: any = {};
-    const pattern = req.query.name || "";
+    const pattern: any = req.query.name || "";
     if (pattern) {
       searchOption.name = new RegExp(pattern, "i");
     }
     try {
-      const authors: any = await Author.find(searchOption);
+      const authors = await Author.find(searchOption);
       console.log(authors);
       res.render("author/index", {
         authors: authors,
