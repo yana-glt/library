@@ -8,9 +8,7 @@ router.get('/', BookController.viewBooks);
 router.get('/:id', BookController.viewBook);
 router.post('/',  BookController.saveBook);
 router.post('/:id',  BookController.updateBook);
-
 router.get('/:id/edit', BookController.editBook);
-
 router.delete('/:id',  BookController.deleteBook);
 
 export default router;

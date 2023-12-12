@@ -1,14 +1,15 @@
+import express, { Request, Response, NextFunction } from "express";
+import CustomError from "../middleware/customError";
+
 class ErrorHandler{
-    public static handleError = (err:any, req:any, res:any, next:any)=>{
+    public static handleError = (err:CustomError, req:Request, res:Response, next:NextFunction)=>{
         if(!err) return next();
         console.log("Error log:", err);
-        res.render('error', {message:err.message, status:err.status, code:err.statusCode});
+        res.render('error', {message:err.message, code:err.statusCode});
     }
 
-    public static handleUnknownUrl = (req:any, res:any, next:any)=>{
-        const err:any = new Error(`Can't find ${req.originalUrl} on the server!`);
-        err.status = 'fail';
-        err.statusCode = 404;
+    public static handleUnknownUrl = (req:Request, res:Response, next:NextFunction)=>{
+        const err:CustomError = new CustomError(404, `Can't find ${req.originalUrl} on the server!`);
         next(err);
     }
 }
