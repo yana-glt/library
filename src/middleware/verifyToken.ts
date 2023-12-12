@@ -1,6 +1,8 @@
+import express, { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
+import CustomRequest from "../middleware/customRequest";
 
-function verifyToken(req: any, res: any, next: any) {
+function verifyToken(req: CustomRequest, res: Response, next: NextFunction) {
   const accessToken = req.cookies.accessToken;
   const key = process.env.secret_key || "";
   jwt.verify(accessToken, key, (err: any, data: any) => {
