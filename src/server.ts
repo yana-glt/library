@@ -20,20 +20,6 @@ dotenv.config();
 const app: Express = express();
 const logger = log4js.getLogger("file");
 
-mongoose.connect(config.mongo.url);
-const db: Connection = mongoose.connection;
-db.on("error", (err: string) => {
-  logger.error(err);
-});
-db.once("open", (): void => {
-  logger.info("DB connected successfully");
-  start();
-});
-
-process.on("uncaughtException", function (err) {
-  logger.info(`UncaughtException: ${err}`);
-});
-
 app.set("view engine", "ejs");
 app.set("views", __dirname + "/views");
 app.set("layout", "layouts/layout");
@@ -54,8 +40,22 @@ app.use("/contact", verifyToken, contactRouter);
 app.all("*", ErrorHandler.handleUnknownUrl);
 app.use(ErrorHandler.handleError);
 
-const start = (): void => {
-  app.listen(config.server.port, (): void => {
-    logger.info("Server is running");
-  });
+const start = async () => {
+  try {
+    await mongoose.connect(config.mongo.url);
+    logger.info("DB connected successfully");
+    const db: Connection = mongoose.connection;
+    db.on("error", (err) => {
+      logger.error(err);
+    });
+    app.listen(config.server.port, (): void => {
+      logger.info("Server is running");
+    });
+  } catch (err) {
+    logger.error(err);
+    process.exit(1);
+  }
 };
+
+start();
+

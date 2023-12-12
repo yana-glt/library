@@ -24,12 +24,11 @@ const bookSchema: Schema = new Schema(
   { timestamps: true }
 );
 
-bookSchema.virtual("coverImagePath").get(function (): any {
-  if (this.cover && this.coverType) {
-    return `data:${this.coverType};charset=utf-8;base64, ${this.cover.toString(
-      "base64"
-    )}`;
-  }
-});
+
+bookSchema.virtual('coverImagePath').get(function() {
+    if(this.cover && this.coverType){
+        return `data:${this.coverType};charset=utf-8;base64, ${this.cover.toString('base64')}`
+    }
+})
 
 export default mongoose.model<IBookModel>("Book", bookSchema);
