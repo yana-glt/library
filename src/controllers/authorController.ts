@@ -1,6 +1,5 @@
 import express, { Request, Response } from "express";
 import Author from "../models/author";
-import User from "../models/user";
 import CustomRequest from '../middleware/customRequest';
 
 class AuthorController {
