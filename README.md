@@ -9,6 +9,7 @@
   - [Getting Started](#getting-started)
     - [Prerequisites](#prerequisites)
     - [Installation](#installation)
+  - [Usage](#usage)
 
 
 ## Description
@@ -69,7 +70,7 @@ npm install
 - [ ] Create your MohgoDb database and setup .env file with credentials.
 - [ ] Run application
 
-##Usage
+## Usage
 
 ```
 npm run dev 
