@@ -1,17 +1,5 @@
 # Online Library
 
-## Contents
-
-- [Online Library](#online-library)
-  - [Contents](#contents)
-  - [Description](#description)
-  - [Dependencies](#dependencies)
-  - [Getting Started](#getting-started)
-    - [Prerequisites](#prerequisites)
-    - [Installation](#installation)
-  - [Usage](#usage)
-
-
 ## Description
 This is an Online Library implemented in Node.js and TypeScript.
 After registration, the user must log in, after that he will get access to the Home page, where the latest book releases added to the library are presented. 
@@ -57,18 +45,18 @@ ___
 
 ### Installation
 
-- [ ] Clone this repository.
+- [X] Clone this repository.
 ```
 git clone https://github.com/yana-glt/library.git
 ```
 
-- [ ] Open package with project in your IDE
-- [ ] Install dependencies npm install
+- [X] Open package with project in your IDE
+- [X] Install dependencies npm install
 ```
 npm install
 ```
-- [ ] Create your MohgoDb database and setup .env file with credentials.
-- [ ] Run application
+- [X] Create your MohgoDb database and setup .env file with credentials.
+- [X] Run application
 
 ## Usage
 
