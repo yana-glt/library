@@ -1,4 +1,4 @@
-import mongoose ,{Document, Schema} from 'mongoose';
+import mongoose, { Document, Schema } from "mongoose";
 
 export interface IAuthor {
     name:string,
@@ -16,4 +16,4 @@ const authorSchema: Schema = new Schema(
     {timestamps:true}
 );
 
-export default mongoose.model<IAuthorModel>('Author', authorSchema);
+export default mongoose.model<IAuthorModel>("Author", authorSchema);

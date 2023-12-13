@@ -46,10 +46,10 @@
     var password = document.getElementById("pwd");
     var confirm_password = document.getElementById("confirm_password");
 
-    function validatePassword(){
-        if(password.value != confirm_password.value){
+    function validatePassword() {
+        if (password.value != confirm_password.value) {
             confirm_password.setCustomValidity("Passwords don't match!")
-        }else{
+        } else {
             confirm_password.setCustomValidity('');
         }
     }

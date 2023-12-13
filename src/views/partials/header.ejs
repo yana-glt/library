@@ -6,15 +6,15 @@
         <% if(!locals.user) { %>
             <li><a href="/user/register">Register</a></li>
             <li><a href="/user/signin">Sign in</a></li>
-        <% } else { %>
-            <li><a href="/">Home</a></li>
-            <li><a href="/author">Authors</a></li>
-            <li><a href="/book">Books</a></li>
-            <li><a href="/contact">Contact</a></li>
-            <form method="post" action="/user/signout">
-                <a href="javascript:$('form').submit();">Sign out</a>
-            </form>
-        <% } %>
+            <% } else { %>
+                <li><a href="/">Home</a></li>
+                <li><a href="/author">Authors</a></li>
+                <li><a href="/book">Books</a></li>
+                <li><a href="/contact">Contact</a></li>
+                <form id="form_signout" method="post" action="/user/signout">
+                    <a href="javascript:$('#form_signout').submit();">Sign out</a>
+                </form>
+                <% } %>
     </ul>
     <label for="nav-toggle" class="icon-burger">
         <div class="line"></div>

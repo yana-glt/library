@@ -6,21 +6,24 @@
         <div class="modal-body">
             <div class="col-12">
                 <label for="name" class="form-label">Name</label>
-                <input type="text" class="form-control input-lg" id="name" name="name" required value="<%= author.name%>">
+                <input type="text" class="form-control input-lg" id="name" name="name" required
+                    value="<%= author.name%>">
                 <div class="invalid-feedback">
                     Please provide author name.
                 </div>
             </div>
             <div class="col-12">
                 <label for="country" class="form-label">Country</label>
-                <input type="text" class="form-control input-lg" id="country" name="country" required value="<%= author.country%>">
+                <input type="text" class="form-control input-lg" id="country" name="country" required
+                    value="<%= author.country%>">
                 <div class="invalid-feedback">
                     Please provide author country.
                 </div>
             </div>
         </div>
         <div class="modal-footer">
-            <a href="/author"><button class="btn btn-secondary m-3" data-dismiss="modal"><i class="bi bi-x-circle"></i> Close</button></a>
+            <a href="/author"><button class="btn btn-secondary m-3" data-dismiss="modal"><i class="bi bi-x-circle"></i>
+                    Close</button></a>
             <button type="submit" class="btn btn-primary"><i class="bi bi-save2"></i> Update</button>
         </div>
     </div>

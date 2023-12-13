@@ -2,6 +2,9 @@ import express, { Request, Response } from "express";
 import Book from "../models/book";
 import Author from "../models/author";
 import CustomRequest from '../middleware/customRequest';
+import log4js from "../middleware/logger";
+
+const logger = log4js.getLogger("file");
 
 class BookController {
   public static viewBooks = (req: CustomRequest, res: Response) => {
@@ -10,32 +13,26 @@ class BookController {
 
   public static viewBook = async (req: CustomRequest, res: Response) => {
     const user = req.user;
-    try {
+    try{
       const book = await Book.findById(req.params.id).populate("author").exec();
       res.render("book/view", { book: book, user: user });
-    } catch (error) {
-      console.log(error);
-    }
+    } catch(err){
+      logger.error(err);
+    }   
   };
 
   public static newBook = async (req: CustomRequest, res: Response) => {
     const user = req.user;
-    try {
+    try{
       const authors = await Author.find();
-      res.render("book/new", {
-        book: new Book(),
-        authors: authors,
-        user: user,
-      });
-    } catch (error) {
-      console.log(error);
-    }
+      res.render("book/new", { book: new Book(), authors: authors, user: user, });
+    } catch(err){
+      logger.error(err);
+    }  
   };
 
   public static saveBook = async (req: CustomRequest, res: Response) => {
-    console.log(req.body);
-    console.log(req.files);
-    try {
+    try{
       const book = new Book({
         title: req.body.title,
         author: req.body.author,
@@ -53,15 +50,15 @@ class BookController {
         author.books.push(newBook.id);
         await author.save();
       }
+      logger.info(`New book was successfully added to db: ${newBook}`);
       res.redirect("book");
-      console.log(newBook);
-    } catch (error) {
-      console.log(error);
-    }
+    } catch(err){
+      logger.error(err);
+    }    
   };
 
   public static updateBook = async (req: CustomRequest, res: Response) => {
-    try {
+    try{
       const book = await Book.findById(req.params.id);
       if (book) {
         book.title = req.body.title;
@@ -79,27 +76,28 @@ class BookController {
           author.books.push(savedBook.id);
           await author.save();
         }
+        logger.info(`Book was successfully updated to ${book}`);
         this.renderBook(req, res);
       }
-    } catch (error) {
-      console.log(error);
-    }
+    } catch(err){
+      logger.error(err);
+    }   
   };
 
   public static editBook = async (req: CustomRequest, res: Response) => {
     const user = req.user;
-    try {
+    try{
       const authors = await Author.find({});
       const book = await Book.findById(req.params.id);
       res.render("book/edit", { book: book, authors: authors, user: user });
-    } catch (error) {
-      console.log(error);
+    } catch(err){
+      logger.error(err);
     }
   };
 
   public static deleteBook = async (req: CustomRequest, res: Response) => {
     const id = req.params.id;
-    try {
+    try{
       const book = await Book.findById({ _id: id });
       if (book) {
         const author = await Author.findById(book.author);
@@ -108,31 +106,26 @@ class BookController {
           await author.save();
         }
         await Book.findOneAndDelete({ _id: id });
+        logger.info(`Book was successfully deleted: ${book}`);
         this.renderBook(req, res);
       }
-    } catch (error) {
-      console.log(error);
+    } catch(err){
+      logger.error(err);
     }
   };
 
   private static async renderBook(req: CustomRequest, res: Response) {
     const user = req.user;
-    try {
-      let searchOption: any = {};
-      const pattern: any = req.query.title || "";
-      if (pattern) {
-        searchOption.title = new RegExp(pattern, "i");
-      }
-      console.log(searchOption);
+    let searchOption: any = {};
+    const pattern: any = req.query.title || "";
+    if (pattern) {
+      searchOption.title = new RegExp(pattern, "i");
+    }
+    try{
       const books = await Book.find(searchOption).populate("author").exec();
-      console.log(books);
-      res.render("book/index", {
-        books: books,
-        searchOption: req.query,
-        user: user,
-      });
-    } catch (error) {
-      console.log(error);
+      res.render("book/index", { books: books, searchOption: req.query, user: user });
+    } catch(err){
+      logger.error(err);
     }
   }
 }

@@ -1,10 +1,12 @@
 import express, { Request, Response, NextFunction } from "express";
 import CustomError from "../middleware/customError";
+import log4js from "./logger";
 
 class ErrorHandler {
   public static handleError = (err: CustomError, req: Request, res: Response, next: NextFunction) => {
     if (!err) return next();
-    console.log("Error log:", err);
+    const logger = log4js.getLogger("file");
+    logger.error(err);
     res.render("error", { message: err.message, code: err.statusCode });
   };
 

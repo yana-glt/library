@@ -1,6 +1,6 @@
 <% if(books.length> 0) { %>
-    <div class="book-content">
-      <% books.forEach(book=> { %>
+  <div class="book-content">
+    <% books.forEach(book=> { %>
       <div class="card title-box" style="width: 430px;">
         <div class="row no-gutters">
           <div class="col-md-4">
@@ -20,17 +20,16 @@
               <p class="card-text"><small class="text-muted">Publish Date: <%= book.publishDate.toDateString() %></small></p>
               <p class="card-text"><small class="text-muted">Page Count: <%= book.pageCount %></small></p>
             </div>
-    
             <div style="position: absolute; bottom: 10px; right: 20px;">
-              <form id="frmAction<%= book.id %>" action="/book/<%= book.id%>?_method=DELETE" method="post">
+              <form id="formAction<%= book.id %>" action="/book/<%= book.id%>?_method=DELETE" method="post">
                 <a class="btn btn-primary" href="/book/<%= book.id%>"><i class="bi bi-eye" style="color: white;"></i></a>
                 <a class="btn btn-success" href="/book/<%= book.id%>/edit"><i class="bi bi-pencil" style="color: white;"></i></a>
-                <a class="btn btn-danger" href="javascript:$('#frmAction<%= book.id %>').submit();"><i class="bi bi-trash" style="color: white;"></i></a>
+                <a class="btn btn-danger" href="javascript:$('#formAction<%= book.id %>').submit();"><i class="bi bi-trash" style="color: white;"></i></a>
               </form>
             </div>
           </div>
         </div>
       </div>
       <% })%>
-    </div>
-<% } %>
+  </div>
+  <% } %>
