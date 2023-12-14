@@ -26,12 +26,15 @@ ___
 - [express-ejs-layouts](https://www.npmjs.com/package/express-ejs-layouts) - Extension of ejs that allows server side layouts with ejs templates.
 - [express-fileupload](https://www.npmjs.com/package/express-fileupload) - Middleware for uploading files and accessing them from req.files.
 - [log4js](https://www.npmjs.com/package/log4js) - JavaScript library to record events – errors and routine system operations.
+- [npm-run-all](https://www.npmjs.com/package/npm-run-all) - Allows to run multiple npm-scripts in sequential.
+- [shelljs](https://www.npmjs.com/package/shelljs) -  Implementation of Unix shell commands on top of the Node.js API.
 - [@types/express](https://www.npmjs.com/package/@types/express) - Provides type definitions for express.
 - [@types/cookie-parser](https://www.npmjs.com/package/@types/cookie-parser) - Provides type definitions for cookie-parser.
 - [@types/express-ejs-layouts](https://www.npmjs.com/package/@types/express-ejs-layouts) - Provides type definitions contains for express-ejs-layouts.
 - [@types/jsonwebtoken](https://www.npmjs.com/package/@types/jsonwebtoken) - Provides type definitions for jsonwebtoken.
 - [@types/method-override](https://www.npmjs.com/package/@types/method-override) - Provides type definitions for method-override.
 - [@types/express-fileupload](https://www.npmjs.com/package/@types/express-fileupload) - Provides type definitions for express-fileupload.
+- [@types/shelljs](https://www.npmjs.com/package/@types/shelljs) - Provides type definitions for shelljs.
   
 ___  
   
@@ -61,5 +64,5 @@ npm install
 ## Usage
 
 ```
-npm run dev 
+npm run start 
 ```
