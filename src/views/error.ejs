@@ -9,6 +9,14 @@
         </div>
     </div>
     <% } %>
+    <% if(code == 401) { %>
+    <div class="modal-footer" style="text-align: center;">
+        <div class="col-12">
+            User Not Found! <br>
+            Please check your email and password and try again <a href="/user/signin">SignIn</a>
+        </div>
+    </div>
+    <% } %>
     <% if(code == 403) { %>
     <div class="modal-footer" style="text-align: center;">
         <div class="col-12">
@@ -16,7 +24,15 @@
         </div>
     </div>
     <% } %>
-    <% if(code !== 403) { %>
+    <% if(code == 404) { %>
+        <div class="modal-footer" style="text-align: center;">
+            <div class="col-12">
+                We cannot find the page you are looking for. <br>
+                Please go back to <a href="/">Home</a>
+            </div>
+        </div>
+        <% } %>
+    <% if(code !== 403 && code !== 401 && code !== 404) { %>
         <div class="modal-footer" style="text-align: center;">
             <div class="col-12">
                 Please go back to <a href="/">Home</a>

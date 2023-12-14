@@ -1,19 +1,19 @@
-import express, { Router, Request, Response } from "express";
+import express, { Request, Response, NextFunction } from "express";
 import CustomRequest from "../middleware/customRequest";
 import Book from "../models/book";
 
 class IndexController {
-  public static getIndex = async (req: CustomRequest, res: Response) => {
+  public static getIndex = async (req: CustomRequest, res: Response, next: NextFunction) => {
     const user = req.user;
-    if (user) {
+    try{
       const books = await Book.find().sort({ createdAt: "desc" }).limit(2).populate("author").exec();
       res.render("index", { books: books, user: user });
-    } else {
-      throw Error("User not found");
-    }
+    } catch(err){
+      return next(err);
+    }     
   };
 
-  public static getIcon = async (req: any, res: Response) => {
+  public static getIcon = async (req: Request, res: Response, next: NextFunction) => {
     res.sendFile("favicon.ico", { root: __dirname });
   };
 }
