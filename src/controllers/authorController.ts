@@ -3,6 +3,7 @@ import Author from "../models/author";
 import Book from "../models/book";
 import CustomRequest from '../middleware/customRequest';
 import log4js from "../middleware/logger";
+import CustomError from "../middleware/customError";
 
 const logger = log4js.getLogger("file");
 
@@ -71,8 +72,12 @@ class AuthorController {
   public static deleteAuthor = async (req: CustomRequest, res: Response, next: NextFunction) => {
     const id = req.params.id;
     try{
-      const author = await Author.findOneAndDelete({ _id: id });
-      logger.info(`Author was successfully deleted: ${author}`);
+      const author = await Author.findOne({ _id: id });
+      if(author && author?.books.length > 0){
+        throw new CustomError(406, 'There are other books by this author in the library, you cannot delete the author until you delete all of his books')
+      }
+      const deletedAuthor = await Author.findOneAndDelete({ _id: id });
+      logger.info(`Author was successfully deleted: ${deletedAuthor}`);
       this.renderAuthor(req, res, next);
     } catch(err){
       return next(err);

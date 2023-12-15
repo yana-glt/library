@@ -3,6 +3,7 @@ import Genre from "../models/genre";
 import Book from "../models/book";
 import CustomRequest from '../middleware/customRequest';
 import log4js from "../middleware/logger";
+import CustomError from "../middleware/customError";
 
 const logger = log4js.getLogger("file");
 
@@ -71,8 +72,12 @@ class GenreController {
   public static deleteGenre = async (req: CustomRequest, res: Response, next: NextFunction) => {
     const id = req.params.id;
     try{
-      const genre = await Genre.findOneAndDelete({ _id: id });
-      logger.info(`Genre was successfully deleted: ${genre}`);
+      const genre = await Genre.findOne({ _id: id });
+      if(genre && genre?.books.length > 0){
+        throw new CustomError(406, 'There are other books by this author in the library, you cannot delete the author until you delete all of his books')
+      }
+      const deletedGenre = await Genre.findOneAndDelete({ _id: id });
+      logger.info(`Genre was successfully deleted: ${deletedGenre}`);
       this.renderGenre(req, res, next);
     } catch(err){
       return next(err);
