@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import express, { Response, NextFunction } from "express";
 import Book from "../models/book";
 import Author from "../models/author";
 import CustomRequest from '../middleware/customRequest';
@@ -7,31 +7,31 @@ import log4js from "../middleware/logger";
 const logger = log4js.getLogger("file");
 
 class BookController {
-  public static viewBooks = (req: CustomRequest, res: Response) => {
-    this.renderBook(req, res);
+  public static viewBooks = (req: CustomRequest, res: Response, next: NextFunction) => {
+    this.renderBook(req, res, next);
   };
 
-  public static viewBook = async (req: CustomRequest, res: Response) => {
+  public static viewBook = async (req: CustomRequest, res: Response, next: NextFunction) => {
     const user = req.user;
     try{
       const book = await Book.findById(req.params.id).populate("author").exec();
       res.render("book/view", { book: book, user: user });
     } catch(err){
-      logger.error(err);
+      return next(err);
     }   
   };
 
-  public static newBook = async (req: CustomRequest, res: Response) => {
+  public static newBook = async (req: CustomRequest, res: Response, next: NextFunction) => {
     const user = req.user;
     try{
       const authors = await Author.find();
       res.render("book/new", { book: new Book(), authors: authors, user: user, });
     } catch(err){
-      logger.error(err);
+      return next(err);
     }  
   };
 
-  public static saveBook = async (req: CustomRequest, res: Response) => {
+  public static saveBook = async (req: CustomRequest, res: Response, next: NextFunction) => {
     try{
       const book = new Book({
         title: req.body.title,
@@ -53,11 +53,11 @@ class BookController {
       logger.info(`New book was successfully added to db: ${newBook}`);
       res.redirect("book");
     } catch(err){
-      logger.error(err);
+      return next(err);
     }    
   };
 
-  public static updateBook = async (req: CustomRequest, res: Response) => {
+  public static updateBook = async (req: CustomRequest, res: Response, next: NextFunction) => {
     try{
       const book = await Book.findById(req.params.id);
       if (book) {
@@ -77,25 +77,25 @@ class BookController {
           await author.save();
         }
         logger.info(`Book was successfully updated to ${book}`);
-        this.renderBook(req, res);
+        this.renderBook(req, res, next);
       }
     } catch(err){
-      logger.error(err);
+      return next(err);
     }   
   };
 
-  public static editBook = async (req: CustomRequest, res: Response) => {
+  public static editBook = async (req: CustomRequest, res: Response, next: NextFunction) => {
     const user = req.user;
     try{
       const authors = await Author.find({});
       const book = await Book.findById(req.params.id);
       res.render("book/edit", { book: book, authors: authors, user: user });
     } catch(err){
-      logger.error(err);
+      return next(err);
     }
   };
 
-  public static deleteBook = async (req: CustomRequest, res: Response) => {
+  public static deleteBook = async (req: CustomRequest, res: Response, next: NextFunction) => {
     const id = req.params.id;
     try{
       const book = await Book.findById({ _id: id });
@@ -107,14 +107,14 @@ class BookController {
         }
         await Book.findOneAndDelete({ _id: id });
         logger.info(`Book was successfully deleted: ${book}`);
-        this.renderBook(req, res);
+        this.renderBook(req, res, next);
       }
     } catch(err){
-      logger.error(err);
+      return next(err);
     }
   };
 
-  private static async renderBook(req: CustomRequest, res: Response) {
+  private static async renderBook(req: CustomRequest, res: Response, next: NextFunction) {
     const user = req.user;
     let searchOption: any = {};
     const pattern: any = req.query.title || "";
@@ -125,9 +125,9 @@ class BookController {
       const books = await Book.find(searchOption).populate("author").exec();
       res.render("book/index", { books: books, searchOption: req.query, user: user });
     } catch(err){
-      logger.error(err);
+      return next(err);
     }
-  }
+  };
 }
 
 export default BookController;
