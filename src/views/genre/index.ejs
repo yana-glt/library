@@ -1,10 +1,10 @@
-<form action="author" method="get">
+<form action="genre" method="get">
     <div class="search-header text-center">
-        <h2 class="text-center">Search Author</h2>
+        <h2 class="text-center">Search Genre</h2>
     </div>
     <div class="form-row">
         <div class="col-12 mb-3">
-            <label for="name">Author Name</label>
+            <label for="name">Genre</label>
             <input type="text" class="form-control" name="name" id="name" value="<%= searchOption.name%>">
         </div>
     </div>
@@ -13,9 +13,9 @@
             <i class="bi bi-search" style="color:white;"></i>
             Search
         </button>
-        <a href="/author/new"> <button type="button" class="btn btn-success">
+        <a href="/genre/new"> <button type="button" class="btn btn-success">
                 <i class="bi bi-plus" style="color:white;"></i>
-                Add Author
+                Add Genre
             </button></a>
     </div>
 </form>
@@ -26,25 +26,25 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th scope="col">Author Name</th>
-                        <th scope="col">Country</th>
+                        <th scope="col">Genre</th>
+                        <th scope="col">Description</th>
                         <th scope="col" style="align-items: center; text-align: center;">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <% authors.forEach(function(author){ %>
+                    <% genres.forEach(function(genre){ %>
                         <tr>
-                            <td style="width: 40%;">
-                                <%= author.name %>
+                            <td style="width: 25%;">
+                                <%= genre.name %>
                             </td>
-                            <td style="width: 35%;">
-                                <%= author.country %>
+                            <td style="width: 50%;">
+                                <%= genre.description %>
                             </td>
                             <td style="width: 25%; align-items: center; text-align: center;">
-                                <form id="formAction<%= author.id %>" action="/author/<%= author.id%>?_method=DELETE" method="post"></form>
-                                <a class="btn btn-primary" href="/author/<%= author.id%>"><i class="bi bi-eye" style="color:white;"></i></a>
-                                <a class="btn btn-success" href="/author/<%= author.id%>/edit"><i class="bi bi-pencil" style="color:white;"></i></a>
-                                <a class="btn btn-danger" href="javascript:$('#formAction<%= author.id %>').submit();"><i class="bi bi-trash" style="color:white;"></i></a>
+                                <form id="formAction<%= genre.id %>" action="/genre/<%= genre.id%>?_method=DELETE" method="post"></form>
+                                <a class="btn btn-primary" href="/genre/<%= genre.id%>"><i class="bi bi-eye" style="color:white;"></i></a>
+                                <a class="btn btn-success" href="/genre/<%= genre.id%>/edit"><i class="bi bi-pencil" style="color:white;"></i></a>
+                                <a class="btn btn-danger" href="javascript:$('#formAction<%= genre.id %>').submit();"><i class="bi bi-trash" style="color:white;"></i></a>
                             </td>
                         </tr>
                         <% }); %>

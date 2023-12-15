@@ -6,7 +6,7 @@ class IndexController {
   public static getIndex = async (req: CustomRequest, res: Response, next: NextFunction) => {
     const user = req.user;
     try{
-      const books = await Book.find().sort({ createdAt: "desc" }).limit(2).populate("author").exec();
+      const books = await Book.find().sort({ createdAt: "desc" }).limit(2).populate("author").populate("genre").exec();
       res.render("index", { books: books, user: user });
     } catch(err){
       return next(err);

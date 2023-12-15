@@ -1,5 +1,6 @@
 import express, { Response, NextFunction } from "express";
 import Author from "../models/author";
+import Book from "../models/book";
 import CustomRequest from '../middleware/customRequest';
 import log4js from "../middleware/logger";
 
@@ -14,7 +15,13 @@ class AuthorController {
     const user = req.user;
     try{
       const author = await Author.findById(req.params.id);
-      res.render("author/view", { author: author, user: user });
+      const booksIdList = author?.books || [];
+      const books = [];
+      for(let i = 0; i < booksIdList?.length; i++){
+        const book = await Book.findById(booksIdList[i]).populate("author").populate("genre").exec();
+        books.push(book);
+      }
+      res.render("author/view", { author: author, user: user, books: books });
     } catch(err){
       return next(err);
     } 
