@@ -1,0 +1,27 @@
+<form class="row needs-validation" action="/genre/<%= genre.id%>" method="post" novalidate>
+    <div class="modal-content">
+        <div class="search-header text-center">
+            <h2 class="text-center">Update Genre</h2>
+        </div>
+        <div class="modal-body">
+            <div class="col-12">
+                <label for="name" class="form-label">Genre</label>
+                <input type="text" class="form-control input-lg" id="name" name="name" required value="<%= genre.name%>">
+                <div class="invalid-feedback">
+                    Please provide genre name.
+                </div>
+            </div>
+            <div class="col-12">
+                <label for="description" class="form-label">Description</label>
+                <input type="text" class="form-control input-lg" id="description" name="description" required value="<%= genre.description%>">
+                <div class="invalid-feedback">
+                    Please provide brief genre description.
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="/genre"><button class="btn btn-secondary m-3" data-dismiss="modal"><i class="bi bi-x-circle"></i> Close</button></a>
+            <button type="submit" class="btn btn-primary"><i class="bi bi-save2"></i> Update</button>
+        </div>
+    </div>
+</form>

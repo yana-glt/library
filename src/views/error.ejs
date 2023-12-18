@@ -32,7 +32,16 @@
             </div>
         </div>
         <% } %>
-    <% if(code !== 403 && code !== 401 && code !== 404) { %>
+    <% if(code == 406) { %>
+        <div class="modal-footer" style="text-align: center;">
+            <div class="col-12">
+                There are other elements in the library that are related to this element.<br>
+                You can't remove it.<br>
+                Please go back to <a href="/">Home</a>
+            </div>
+        </div>
+        <% } %>    
+    <% if(code !== 403 && code !== 401 && code !== 404 && code!=406) { %>
         <div class="modal-footer" style="text-align: center;">
             <div class="col-12">
                 Please go back to <a href="/">Home</a>

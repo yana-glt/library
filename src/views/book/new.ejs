@@ -28,17 +28,30 @@
                 </div>
             </div>
             <div class="col-12 mt-2">
+                <label for="genre" class="form-label">Genre</label>
+                <select name="genre" type="select" class="form-select" required>
+                    <option selected label="Select Genre" value=""></option>
+                    <% genres.forEach(genre=> { %> <% if(genre.id==book.genre) { %>
+                            <option selected label="<%= genre.name %>" value="<%= genre.id %>"></option>
+                            <%} else {%>
+                                <option label="<%= genre.name %>" value="<%= genre.id %>"></option>
+                                <%} %>
+                                    <%})%>
+                </select>
+                <div class="invalid-feedback">
+                    Please provide genre.
+                </div>
+            </div>
+            <div class="col-12 mt-2">
                 <label for="publishDate" class="form-label">Publish date</label>
-                <input type="date" class="form-select" id="publishDate" name="publishDate" required
-                    value="<%= book.publishDate == null ? '' : book.publishDate.toISOString().split('T')[0] %>">
+                <input type="date" class="form-select" id="publishDate" name="publishDate" required value="<%= book.publishDate == null ? '' : book.publishDate.toISOString().split('T')[0] %>">
                 <div class="invalid-feedback">
                     Please provide publish date.
                 </div>
             </div>
             <div class="col-12">
                 <label for="pageCount" class="form-label">Page Count</label>
-                <input type="number" class="form-control" id="pageCount" name="pageCount" required
-                    value="<%= book.pageCount == null ? '' : book.pageCount %>">
+                <input type="number" class="form-control" id="pageCount" name="pageCount" required value="<%= book.pageCount == null ? '' : book.pageCount %>">
                 <div class="invalid-feedback">
                     Please provide page count.
                 </div>
@@ -59,8 +72,7 @@
             </div>
         </div>
         <div class="modal-footer">
-            <a href="/book"><button type="button" class="btn btn-secondary m-3" data-dismiss="modal"><i
-                        class="bi bi-x-circle"></i> Close</button></a>
+            <a href="/book"><button type="button" class="btn btn-secondary m-3" data-dismiss="modal"><i class="bi bi-x-circle"></i> Close</button></a>
             <button type="submit" class="btn btn-primary"><i class="bi bi-save2"></i> Save</button>
         </div>
     </div>
