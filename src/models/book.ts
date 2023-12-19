@@ -9,6 +9,7 @@ export interface IBook {
   cover: Buffer,
   coverType: string,
   author: mongoose.Schema.Types.ObjectId,
+  reviews: mongoose.Schema.Types.ObjectId[],
 };
 export interface IBookModel extends IBook, Document {};
 
@@ -22,6 +23,7 @@ const bookSchema: Schema = new Schema(
     cover: { type: Buffer, required: true },
     coverType: { type: String, required: true },
     author: {type: mongoose.Schema.Types.ObjectId, required: true, ref: "Author"},
+    reviews:[{type: mongoose.Schema.Types.ObjectId,  ref:'Review'}],
   },
   { timestamps: true }
 );

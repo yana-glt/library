@@ -1,0 +1,15 @@
+<form action="book" method="get">
+  <h5 class="card-title text-center"><%= book.title %></h5>
+  <p class="card-text text-center"><small class="text-muted">Author: <%= book.author.name %></small></p>
+    <div class="search-header text-center">
+      <h2 class="text-center">Reviews</h2>
+    </div>
+        <a href="/book/<%= book.id %>/review/new"> <button type="button" class="btn btn-success">
+            <i class="bi bi-plus" style="color: white;"></i>
+            Add Review
+          </button></a>
+  </form>
+<br>
+<div>
+    <%- include('../partials/reviewGrid.ejs')%>
+</div>
