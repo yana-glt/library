@@ -1,0 +1,29 @@
+<form class="row needs-validation" action="/book/<%= book.id %>/review" method="post" novalidate enctype="multipart/form-data">
+    <div class="modal-content">
+        <h5 class="card-title text-center"><%= book.title %></h5>
+        <p class="card-text text-center"><small class="text-muted">Author: <%= book.author.name %></small></p>
+        <div class="search-header text-center">
+            <h2 class="text-center">Add Review</h2>
+        </div>
+        <div class="modal-body">
+            <div class="col-12">
+                <label for="nickname" class="form-label">Review as: </label>
+                <input type="text" class="form-control input-lg" id="nickname" name="nickname" required value="<%= review.nickname == null ? '' : review.nickname %>">
+                <div class="invalid-feedback">
+                    Please enter your nickname.
+                </div>
+            </div>
+            <div class="col-12">
+                <label for="message" class="form-label">Review</label>
+                <input type="text" class="form-control" id="message" name="message" required value="<%= review.message == null ? '' : review.message %>">
+                <div class="invalid-feedback">
+                    Please provide your review.
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="/book"><button type="button" class="btn btn-secondary m-3" data-dismiss="modal"><i class="bi bi-x-circle"></i> Close</button></a>
+            <button type="submit" class="btn btn-primary"><i class="bi bi-save2"></i> Save</button>
+        </div>
+    </div>
+</form>

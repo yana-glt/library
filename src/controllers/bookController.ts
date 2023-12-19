@@ -2,6 +2,7 @@ import express, { Response, NextFunction } from "express";
 import Book from "../models/book";
 import Author from "../models/author";
 import Genre from "../models/genre";
+import Review from "../models/review";
 import CustomRequest from '../middleware/customRequest';
 import log4js from "../middleware/logger";
 
@@ -70,7 +71,6 @@ class BookController {
       const book = await Book.findById(req.params.id);
       const currentAuthor = await Author.findById(book?.author);
       const currentGenre = await Genre.findById(book?.genre);
-      console.log(book);
       if (book) {
         book.title = req.body.title;
         book.author = req.body.author;
@@ -83,7 +83,6 @@ class BookController {
           book.coverType = (req.files as any).cover.mimetype;
         }
         const savedBook = await book.save();
-        console.log(savedBook);
         const author = await Author.findById(savedBook.author);
         if (author && currentAuthor?.id != savedBook.author) {
           currentAuthor?.books.splice(currentAuthor.books.indexOf(book.author), 1)
@@ -132,6 +131,9 @@ class BookController {
         if (genre) {
           genre.books.splice(genre.books.indexOf(book.genre), 1);
           await genre.save();
+        }
+        for(let i = 0; i < book.reviews?.length; i++){
+          await Review.findByIdAndDelete(book.reviews[i]);
         }
         await Book.findOneAndDelete({ _id: id });
         logger.info(`Book was successfully deleted: ${book}`);

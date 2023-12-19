@@ -1,0 +1,16 @@
+<% if(reviews.length> 0) { %>
+    <div class="book-content">
+      <% reviews.forEach(review=> { %>
+        <div class="card title-box" style="width: 430px;">
+          <div class="row no-gutters">
+            <div class="col-md-8">
+              <div class="card-body" style="position: absolute; top:2px; left:2px">
+                <h5 class="card-title text-center">User: <%= review.nickname %></h5>
+                <p class="card-text text-center"><%= review.message %></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <% })%>
+    </div>
+<% } %>
