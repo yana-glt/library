@@ -13,7 +13,6 @@ export interface IMagazineModel extends IMagazine, Document {};
 const magazineSchema: Schema = new Schema(
   {
     title: { type: String, required: true },
-    description: { type: String, required: true },
     magazineType: { type:mongoose.Schema.Types.ObjectId, required: true, ref: "MagazineType"},
     publishDate: { type: Date, required: true },
     pageCount: { type: Number, required: true },

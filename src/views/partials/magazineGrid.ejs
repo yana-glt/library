@@ -1,0 +1,30 @@
+<% if(magazines.length> 0) { %>
+    <div class="book-content">
+      <% magazines.forEach(magazine=> { %>
+        <div class="card title-box" style="width: 430px;">
+          <div class="row no-gutters">
+            <div class="col-md-4">
+              <a href="/magazine/<%= magazine.id%>">
+                <img class="book-cover" src="<%= magazine.coverImagePath %>">
+              </a>
+            </div>
+            <div class="col-md-8">
+              <div class="card-body" style="position: absolute; top:2px; left:200px">
+                <h5 class="card-title"><%= magazine.title %></h5>
+                <p class="card-text"><small class="text-muted">Magazine Type: <%= magazine.magazineType.name %></small></p>
+                <p class="card-text"><small class="text-muted">Publish Date: <%= magazine.publishDate.toDateString() %></small></p>
+                <p class="card-text"><small class="text-muted">Page Count: <%= magazine.pageCount %></small></p>
+              </div>
+              <div style="position: absolute; bottom: 10px; right: 20px;">
+                <form id="formAction<%= magazine.id %>" action="/magazine/<%= magazine.id%>?_method=DELETE" method="post">
+                  <a class="btn btn-primary" href="/magazine/<%= magazine.id%>"><i class="bi bi-eye" style="color: white;"></i></a>
+                  <a class="btn btn-success" href="/magazine/<%= magazine.id%>/edit"><i class="bi bi-pencil" style="color: white;"></i></a>
+                  <a class="btn btn-danger" href="javascript:$('#formAction<%= magazine.id %>').submit();"><i class="bi bi-trash" style="color: white;"></i></a>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <% })%>
+    </div>
+    <% } %>

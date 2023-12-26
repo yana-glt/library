@@ -35,7 +35,6 @@ class MagazineController {
     try{
       const magazine = new Magazine({
         title: req.body.title,
-        description: req.body.description,
         magazineType: req.body.magazineType,
         publishDate: req.body.publishDate,
         pageCount: req.body.pageCount,
