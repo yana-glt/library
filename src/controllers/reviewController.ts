@@ -46,7 +46,7 @@ class ReviewController {
   private static async renderReview(req: CustomRequest, res: Response, next: NextFunction) {
     const user = req.user;
     try{
-      const book = await Book.findById(req.params.id);
+      const book = await Book.findById(req.params.id).populate("author").exec();
       const reviews = [];
       if(book){
         let reviewsIdList = book.reviews;
