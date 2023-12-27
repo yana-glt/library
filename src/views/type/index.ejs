@@ -1,0 +1,55 @@
+<form action="type" method="get">
+    <div class="search-header text-center">
+        <h2 class="text-center">Search Magazine Type</h2>
+    </div>
+    <div class="form-row">
+        <div class="col-12 mb-3">
+            <label for="name">Magazine Type</label>
+            <input type="text" class="form-control" name="name" id="name" value="<%= searchOption.name%>">
+        </div>
+    </div>
+    <div class="text-center">
+        <button type="submit" class="btn btn-primary">
+            <i class="bi bi-search" style="color:white;"></i>
+            Search
+        </button>
+        <a href="/type/new"> <button type="button" class="btn btn-success">
+                <i class="bi bi-plus" style="color:white;"></i>
+                Add Magazine Type
+            </button></a>
+    </div>
+</form>
+<br>
+<div class="container" style="width: 800px;">
+    <div class="row">
+        <div class="col-12" class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Magazine Type</th>
+                        <th scope="col">Description</th>
+                        <th scope="col" style="align-items: center; text-align: center;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% magazineTypes.forEach(function(magazineType){ %>
+                        <tr>
+                            <td style="width: 25%;">
+                                <%= magazineType.name %>
+                            </td>
+                            <td style="width: 50%;">
+                                <%= magazineType.description %>
+                            </td>
+                            <td style="width: 25%; align-items: center; text-align: center;">
+                                <form id="formAction<%= magazineType.id %>" action="/type/<%= magazineType.id%>?_method=DELETE" method="post"></form>
+                                <a class="btn btn-primary" href="/type/<%= magazineType.id%>"><i class="bi bi-eye" style="color:white;"></i></a>
+                                <a class="btn btn-success" href="/type/<%= magazineType.id%>/edit"><i class="bi bi-pencil" style="color:white;"></i></a>
+                                <a class="btn btn-danger" href="javascript:$('#formAction<%= magazineType.id %>').submit();"><i class="bi bi-trash" style="color:white;"></i></a>
+                            </td>
+                        </tr>
+                        <% }); %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

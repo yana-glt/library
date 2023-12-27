@@ -70,6 +70,9 @@ npm run start
 ## Usage
 Application implements the following features for diferent users correspondingly.
 
+
+
+
 ## Registration
 - Description
     
@@ -553,6 +556,259 @@ This endpoint provides access to all reviews for a particular book.
 
     JSON array containing all reviews for a particular book
 
+## Add magazine type
+- Description
+
+This endpoint provides the ability to add new magazine type to the library.
+- Endpoint http://localhost:3000/type
+- Method: POST
+- Request Body
+```
+{
+  "name": "Type",
+  "description": "Type Description"
+}
+```
+- Response Body
+```
+{
+  "name": "Type",
+  "description": "Type Description",
+  "magazines": [
+    
+  ],
+  "_id": "6584bf31694d8efbcdad8812",
+  "__v": 0
+}
+```
+
+
+## Edit magazine type
+- Description
+
+This endpoint provides the ability to edit magazine type.
+
+- Endpoint http://localhost:3000/type/:id
+- Method: POST
+- Parameter: id
+- Request Body
+```
+{
+  "name": "New Genre",
+  "description": " New Genre Description"
+}
+```
+- Response Body
+```
+{
+  "_id": "6584bf31694d8efbcdad8812",
+  "name": "New Type",
+  "description": " New Type Description",
+  "magazines": [
+    "6584c0c8f6b16a6a9ebc77b7"
+  ],
+  "__v": 1
+}
+```
+
+## Delete magazine type
+- Description
+
+This endpoint provides the ability to delete a particular magazine type.
+
+- Endpoint http://localhost:3000/type/:id?_method=DELETE
+- Method: DELETE
+- Parameter: id
+- Response Body
+```
+{
+  "_id": "6584bf31694d8efbcdad8812",
+  "name": "New Type",
+  "description": " New Type Description",
+  "magazines": [
+    
+  ],
+  "__v": 1
+}
+```
+
+## Search magazine type
+- Description
+
+This endpoint provides the ability to search by magazine type name
+
+- Endpoint http://localhost:3000/type?name=science
+- Method: GET
+- Parameter: name
+- Response Body
+
+  JSON array containing all magazine types matching a given search condition
+
+## Add magazine
+- Description
+
+This endpoint provides the ability to add new magazine to the library.
+
+- Endpoint http://localhost:3000/magazine
+- Method: POST
+- Request Body
+```
+{
+  "title": "Title",
+  "magazineType": "6584bf31694d8efbcdad8812",
+  "publishDate": "2023-12-21T00:00:00.000Z",
+  "pageCount": 50
+}
+```
+- Response Body
+```
+{
+  "title": "Title",
+  "magazineType": "6584bf31694d8efbcdad8812",
+  "publishDate": "2023-12-21T00:00:00.000Z",
+  "pageCount": 50,
+  "_id": "6584c0c8f6b16a6a9ebc77b7",
+  "cover": {
+    "type": "Buffer",
+    "data": [
+      ...
+    ]
+  },
+  "coverType": "image/jpeg",
+  "createdAt": "2023-12-21T23:48:40.468Z",
+  "updatedAt": "2023-12-21T23:48:40.468Z",
+  "__v": 0
+}
+```
+
+## Edit magazine
+- Description
+
+This endpoint provides the ability to edit magazine.
+
+- Endpoint http://localhost:3000/magazine/:id
+- Method: POST
+- Parameter: id
+- Request Body
+```
+{
+  "title": "New Title",
+  "magazineType": "6584bf31694d8efbcdad8812",
+  "publishDate": "2023-12-21T11:09:43.938Z",
+  "pageCount": 80
+}
+
+```
+- Response Body
+```
+{
+  "_id": "6584c0c8f6b16a6a9ebc77b7",
+  "title": "New Title",
+  "magazineType": "6584bf31694d8efbcdad8812",
+  "publishDate": "2023-12-21T00:00:00.000Z",
+  "pageCount": 80,
+  "cover": {
+    "type": "Buffer",
+    "data": [
+      ...
+    ]
+  },
+  "coverType": "image/jpeg",
+  "createdAt": "2023-12-21T23:48:40.468Z",
+  "updatedAt": "2023-12-21T23:57:34.099Z",
+  "__v": 1
+}
+```
+
+## Delete magazine
+- Description
+
+This endpoint provides the ability to delete a particular magazine.
+
+- Endpoint http://localhost:3000/magazine/:id?_method=DELETE
+- Method: DELETE
+- Parameter: id
+- Response Body
+```
+{
+  "_id": "6584c0c8f6b16a6a9ebc77b7",
+  "title": "New Title",
+  "magazineType": "6584bf31694d8efbcdad8812",
+  "publishDate": "2023-12-21T00:00:00.000Z",
+  "pageCount": 80,
+  "cover": {
+    "type": "Buffer",
+    "data": [
+      ...
+    ]
+  },
+  "coverType": "image/jpeg",
+  "createdAt": "2023-12-21T23:48:40.468Z",
+  "updatedAt": "2023-12-21T23:52:04.126Z",
+  "__v": 1
+}
+```
+
+## Search magazine
+- Description
+
+This endpoint provides the ability to search by magazine title
+
+- Endpoint http://localhost:3000/magazine?title=lancet
+- Method: GET
+- Parameter: title
+- Response Body
+
+  JSON array containing all magazines matching a given search condition
+
+## Get magazine
+- Description
+
+This endpoint provides the ability to retrieve a particular magazine.
+
+- Endpoint http://localhost:3000/magazine/:id
+- Method: GET
+- Parameter: id
+- Response Body
+```
+{
+  "_id": "6584c0c8f6b16a6a9ebc77b7",
+  "title": "Title",
+  "magazineType": {
+    "_id": "6584bf31694d8efbcdad8812",
+    "name": "Type",
+    "description": "Type Description",
+    "magazines": [
+      "6584c0c8f6b16a6a9ebc77b7"
+    ],
+    "__v": 1
+  },
+  "publishDate": "2023-12-21T00:00:00.000Z",
+  "pageCount": 50,
+  "cover": {
+    "type": "Buffer",
+    "data": [
+      ...
+    ]
+  },
+  "coverType": "image/jpeg",
+  "createdAt": "2023-12-21T23:48:40.468Z",
+  "updatedAt": "2023-12-21T23:48:40.468Z",
+  "__v": 0
+}
+```
+
+## Get all available magazines
+- Description
+
+This endpoint provide access to all magazines added to the library.
+
+- Endpoint http://localhost:3000/magazine
+- Method: GET
+- Response Body
+
+  JSON array containing all magazines
+
 ## Send message
 - Description
   
@@ -589,3 +845,4 @@ This endpoint provides the ability to send a message to the library developer
 The Signout operation terminates user session by cleaning the cookies. The user accessToken is required for successful Signout operation.
 - Endpoint    http://localhost:3000/user/signout
 - Method: GET
+  
