@@ -52,7 +52,7 @@ class GenreController {
 
   public static newGenre = (req: CustomRequest, res: Response, next: NextFunction) => {
     const user = req.user;
-    res.render("genre/new", { author: new Genre(), user: user });
+    res.render("genre/new", { genre: new Genre(), user: user });
   };
 
   public static updateGenre = async (req: CustomRequest, res: Response, next: NextFunction) => {
@@ -74,7 +74,7 @@ class GenreController {
     try{
       const genre = await Genre.findOne({ _id: id });
       if(genre && genre?.books.length > 0){
-        throw new CustomError(406, 'There are other books by this author in the library, you cannot delete the author until you delete all of his books')
+        throw new CustomError(406, 'There are other books of this genre in the library, you cannot delete the genre until you delete all books of this genre')
       }
       const deletedGenre = await Genre.findOneAndDelete({ _id: id });
       logger.info(`Genre was successfully deleted: ${deletedGenre}`);

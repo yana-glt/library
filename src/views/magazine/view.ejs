@@ -1,0 +1,17 @@
+<form class="row needs-validation">
+    <div class="card">
+        <div class="card-header">
+            <img style="width:400px;height:600px;" src="<%= magazine.coverImagePath %>">
+        </div>
+        <div class="card-body">
+            <h5 class="card-title"><%= magazine.title %></h5>
+            <p class="card-text"><small class="text-muted">Magazine Type: <%= magazine.magazineType.name %></small></p>
+            <p class="card-text"><small class="text-muted">Publish Date: <%= magazine.publishDate.toDateString() %></small></p>
+            <p class="card-text"><small class="text-muted">Page Count: <%= magazine.pageCount %></small></p>
+        </div>
+        <div style="position: absolute; bottom: 10px; right:10px;">
+            <a href="/magazine"><button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="bi bi-x-circle"></i> Close</button></a>
+            <a class="btn btn-primary text-right" href="/magazine/<%= magazine.id %>/edit"><i class="bi bi-pencil"></i> Edit</a>
+        </div>
+    </div>
+</form>

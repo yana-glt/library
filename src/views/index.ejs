@@ -1,7 +1,15 @@
 <div class="search-header text-center">
-  <h2 class="text-center">Recently Added</h2>
+  <h2 class="text-center">Recently Added Books</h2>
 </div>
 <br>
 <div>
   <%- include('partials/bookGrid.ejs', {books:books})%>
+</div>
+
+<div class="search-header text-center">
+  <h2 class="text-center">Recently Added Magazines</h2>
+</div>
+<br>
+<div>
+  <%- include('partials/magazineGrid.ejs', {magazines:magazines})%>
 </div>

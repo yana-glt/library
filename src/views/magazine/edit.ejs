@@ -1,0 +1,56 @@
+<form class="row needs-validation" action="/magazine/<%= magazine.id%>" method="post" novalidate enctype="multipart/form-data">
+    <div class="modal-content">
+        <div class="search-header text-center">
+            <h2 class="text-center">Update Magazine</h2>
+        </div>
+        <div class="modal-body">
+            <div class="col-12">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" class="form-control input-lg" id="title" name="title" required value="<%= magazine.title == null ? '' : magazine.title %>">
+                <div class="invalid-feedback">
+                    Please provide magazine title.
+                </div>
+            </div>
+            <div class="col-12 mt-2">
+                <label for="magazineType" class="form-label">Magazine Type</label>
+                <select name="magazineType" type="select" class="form-select" required>
+                    <option selected label="Select Magazine Type" value=""></option>
+                    <% magazineTypes.forEach(magazineType=> { %> <% if(magazineType.id==magazine.magazineType) { %>
+                            <option selected label="<%= magazineType.name %>" value="<%= magazineType.id %>"></option>
+                            <%} else {%>
+                                <option label="<%= magazineType.name %>" value="<%= magazineType.id %>"></option>
+                                <%} %>
+                                    <%})%>
+                </select>
+                <div class="invalid-feedback">
+                    Please provide magazine type.
+                </div>
+            </div>
+            <div class="col-12 mt-2">
+                <label for="publishDate" class="form-label">Publish date</label>
+                <input type="date" class="form-select" id="publishDate" name="publishDate" required value="<%= magazine.publishDate == null ? '' : magazine.publishDate.toISOString().split('T')[0] %>">
+                <div class="invalid-feedback">
+                    Please provide publish date.
+                </div>
+            </div>
+            <div class="col-12">
+                <label for="pageCount" class="form-label">Page Count</label>
+                <input type="number" class="form-control" id="pageCount" name="pageCount" required value="<%= magazine.pageCount == null ? '' : magazine.pageCount %>">
+                <div class="invalid-feedback">
+                    Please provide page count.
+                </div>
+            </div>
+            <div class="col-12 mt-2">
+                <label for="cover" class="form-label">Cover</label>
+                <input id="custom-file-upload" type="file" class="form-control" id="cover" name="cover" required>
+                <div class="invalid-feedback">
+                    Please upload magazine cover.
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="/magazine"><button class="btn btn-secondary m-3" data-dismiss="modal"><i class="bi bi-x-circle"></i> Close</button></a>
+            <button type="submit" class="btn btn-primary"><i class="bi bi-save2"></i> Update</button>
+        </div>
+    </div>
+</form>
