@@ -146,14 +146,20 @@ class BookController {
 
   private static async renderBook(req: CustomRequest, res: Response, next: NextFunction) {
     const user = req.user;
-    let searchOption: any = {};
-    const pattern: any = req.query.title || "";
-    if (pattern) {
-      searchOption.title = new RegExp(pattern, "i");
-    }
+    const titlePattern: any = req.query.title || "";
+    const authorPpattern: any = req.query.author || "";
+    const genrePattern: any = req.query.genre || "";
     try{
-      const books = await Book.find(searchOption).populate("author").populate("genre").exec();
-      res.render("book/index", { books: books, searchOption: req.query, user: user });
+      const books = await Book.find({ "title":new RegExp(titlePattern, "i") })
+      .populate({path: 'author', match: { name: new RegExp(authorPpattern, "i")}})
+      .populate({path: 'genre', match: { name: new RegExp(genrePattern, "i")}}).exec();
+      const searchedBooks = [];
+      for(let i = 0; i < books?.length; i++){
+        if(books[i].genre != null && books[i].author != null){
+          searchedBooks.push(books[i])
+        }
+      }
+      res.render("book/index", { books: searchedBooks, searchOption: req.query, user: user });
     } catch(err){
       return next(err);
     }
