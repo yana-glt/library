@@ -6,7 +6,7 @@ class ErrorHandler {
   public static handleError = (err: Error | CustomError, req: Request, res: Response, next: NextFunction) => {
     if (!err) return next();
     const logger = log4js.getLogger("file");
-    if(!this.isTrustedError(err)) process.exit(1);
+    if(!this.isTrustedError(err)) process.exit(1); 
     logger.error(err);
     res.render("error", { message: err.message, code: (err as CustomError).statusCode });
   };
