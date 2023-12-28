@@ -445,13 +445,14 @@ This endpoint provides the ability to delete a particular book.
 
 - Description
 
-This endpoint provides the ability to search by book title
-- Endpoint http://localhost:3000/book?title=ulysses
+This endpoint provides the ability to search by book title, author and genre (
+in any combination of these parameters)
+- Endpoint http://localhost:3000/book?title=ulysses&author=joyce&genre=fiction
 - Method: GET
-- Parameter: title
+- Parameters: title, author, genre
 - Response Body 
 
-    JSON array containing all books matching a given search condition
+    JSON array containing all books matching a given search conditions
  
 ## Get book
 
@@ -752,14 +753,14 @@ This endpoint provides the ability to delete a particular magazine.
 ## Search magazine
 - Description
 
-This endpoint provides the ability to search by magazine title
+This endpoint provides the ability to search by magazine title and magazine type
 
-- Endpoint http://localhost:3000/magazine?title=lancet
+- Endpoint http://localhost:3000/magazine?title=lancet&type=science
 - Method: GET
-- Parameter: title
+- Parameters: title, type
 - Response Body
 
-  JSON array containing all magazines matching a given search condition
+  JSON array containing all magazines matching a given search conditions
 
 ## Get magazine
 - Description

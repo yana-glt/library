@@ -117,14 +117,18 @@ class MagazineController {
 
   private static async renderMagazine(req: CustomRequest, res: Response, next: NextFunction) {
     const user = req.user;
-    let searchOption: any = {};
-    const pattern: any = req.query.title || "";
-    if (pattern) {
-      searchOption.title = new RegExp(pattern, "i");
-    }
+    const titlePattern: any = req.query.title || "";
+    const typePattern: any = req.query.type || "";
     try{
-      const magazines = await Magazine.find(searchOption).populate("magazineType").exec();
-      res.render("magazine/index", { magazines: magazines, searchOption: req.query, user: user });
+      const magazines = await Magazine.find({"title": new RegExp(titlePattern, "i")})
+      .populate({ path: 'magazineType', match: { name: new RegExp(typePattern, "i")}}).exec();
+      const searchedMagazines = [];
+      for(let i = 0; i < magazines?.length; i++){
+        if(magazines[i].magazineType != null){
+          searchedMagazines.push(magazines[i])
+        }
+      }
+      res.render("magazine/index", { magazines: searchedMagazines, searchOption: req.query, user: user });
     } catch(err){
       return next(err);
     }
